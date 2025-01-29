@@ -1,11 +1,11 @@
 import time
-import redis
-from rq import Queue, Worker, Connection
 from fetch_data import fetch_data_chunk
 from elastic_client import update_elasticsearch
 from settings import REDIS_URL
+from rq import Queue, Worker
+from redis import Redis
 
-redis_conn = redis.StrictRedis.from_url(REDIS_URL)
+redis_conn = Redis.from_url("redis://localhost:6379")
 queue = Queue(connection=redis_conn)
 
 

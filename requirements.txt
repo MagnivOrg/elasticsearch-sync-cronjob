@@ -1,5 +1,5 @@
-redis
-rq
 psycopg2
 elasticsearch
 python-dotenv
+rq==1.15.1
+redis==5.0.1
