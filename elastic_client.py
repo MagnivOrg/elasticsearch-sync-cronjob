@@ -1,8 +1,7 @@
 from elasticsearch import Elasticsearch, helpers
+from settings import ES_HOST
 
-from main import POSTGRES_HOST
-
-es = Elasticsearch([POSTGRES_HOST])
+es = Elasticsearch([ES_HOST])
 
 def update_elasticsearch(data_chunk):
     """Push data to Elasticsearch in batches."""
