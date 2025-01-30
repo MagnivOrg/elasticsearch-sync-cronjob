@@ -1,7 +1,8 @@
 services:
-  - type: worker
-    name: elastic-worker-service
+  - type: cron
+    name: elasticsearch-sync-cron
     envVars:
       - fromFile: .env
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python worker.py"
+    schedule: "*/10 * * * *"
+    startCommand: "python cron_sync.py"
