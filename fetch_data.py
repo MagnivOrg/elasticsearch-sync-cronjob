@@ -1,10 +1,8 @@
 import psycopg2
-
 from settings import DB_CONFIG
 
-
-def fetch_data_chunk(offset, limit):
-    """Fetch a chunk of data from PostgreSQL."""
+def fetch_data_chunk(last_sync_time, limit):
+    """Fetch only new records from PostgreSQL based on created_at timestamp."""
     conn = psycopg2.connect(**DB_CONFIG)
     cursor = conn.cursor()
 
@@ -19,11 +17,12 @@ def fetch_data_chunk(offset, limit):
         LEFT JOIN tags AS t ON rt.tag_id = t.id
         LEFT JOIN metadata_value AS mv ON rl.id = mv.request_id
         LEFT JOIN metadata_field AS mf ON mv.metadata_field_id = mf.id
+        WHERE rl.created_at > %s
         GROUP BY rl.id, rl.workspace_id, rl.request_start_time, rl.request_end_time, rl.price, rl.tokens, rl.engine
-        OFFSET {offset} LIMIT {limit};
+        ORDER BY rl.created_at ASC
+        LIMIT %s;
     """
-
-    cursor.execute(query)
+    cursor.execute(query, (last_sync_time, limit))
     rows = cursor.fetchall()
 
     cursor.close()

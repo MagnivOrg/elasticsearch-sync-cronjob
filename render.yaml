@@ -1,8 +1,8 @@
 services:
   - type: cron
-    name: elasticsearch-sync-cron
+    name: elasticsearch-sync
     envVars:
       - fromFile: .env
     buildCommand: "pip install -r requirements.txt"
-    schedule: "*/10 * * * *"
     startCommand: "python cron_sync.py"
+    schedule: "*/10 * * * *"
