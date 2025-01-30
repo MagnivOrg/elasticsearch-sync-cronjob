@@ -4,6 +4,7 @@ from elastic_client import update_elasticsearch
 CHUNK_SIZE = 1000000
 
 def sync_to_elasticsearch():
+    """Fetch data in chunks and sync it to Elasticsearch."""
     offset = 0
 
     while True:
