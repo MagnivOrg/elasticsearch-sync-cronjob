@@ -1,15 +1,11 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 DB_CONFIG = {
-    "dbname": os.getenv("POSTGRES_DB"),
-    "user": os.getenv("POSTGRES_USER"),
-    "password": os.getenv("POSTGRES_PASSWORD"),
-    "host": os.getenv("POSTGRES_HOST"),
-    "port": os.getenv("POSTGRES_PORT"),
+    "dbname": os.environ["DB_NAME"],
+    "user": os.environ["DB_USER"],
+    "password": os.environ["DB_PASSWORD"],
+    "host": os.environ["DB_HOST"],
+    "port": os.environ["DB_PORT"],
 }
 
-REDIS_URL = os.getenv("REDIS_URL")
-ES_HOST = os.getenv("ELASTICSEARCH_URL")
+ES_HOST = os.environ["ES_HOST"]
