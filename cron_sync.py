@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import psycopg2
 from elastic_client import update_elasticsearch
 from settings import DB_CONFIG
@@ -24,16 +26,20 @@ def sync_to_elasticsearch():
                 "workspace_id": row[1],
                 "request_log_id": row[2],
                 "prompt_id": row[3],
-                "prompt_name": row[4],
-                "request_start_time": row[5],
-                "request_end_time": row[6],
-                "price": row[7],
-                "tokens": row[8],
-                "engine": row[9],
+                "prompt_name": row[4] if row[4] else "",
+                "request_start_time": row[5].isoformat() if isinstance(row[5], datetime) else "1970-01-01T00:00:00",
+                "request_end_time": row[6].isoformat() if isinstance(row[6], datetime) else "1970-01-01T00:00:00",
+                "price": row[7] if row[7] is not None else 0.0,
+                "tokens": row[8] if row[8] is not None else 0,
+                "engine": row[9] if row[9] else "",
                 "tags": row[10] if row[10] else [],
-                "metadata": row[11] if row[11] else {},
-                "created_at": row[12],
-                "updated_at": row[13],
+                "analytics_metadata": row[11] if row[11] else {},
+                "created_at": (
+                    row[12].isoformat() if isinstance(row[12], datetime) else "1970-01-01T00:00:00"
+                ) if row[12] and row[12] is not False else "1970-01-01T00:00:00",
+                "updated_at": (
+                    row[13].isoformat() if isinstance(row[13], datetime) else "1970-01-01T00:00:00"
+                ),
             },
         }
         for row in data_chunk
