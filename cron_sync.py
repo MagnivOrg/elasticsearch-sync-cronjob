@@ -23,8 +23,8 @@ def sync_to_elasticsearch():
             "_index": "analytics_index",
             "_source": {
                 "id": row[0],
-                "workspace_id": row[1],
-                "request_log_id": row[2],
+                "request_log_id": row[1],
+                "workspace_id": row[2],
                 "prompt_id": row[3],
                 "prompt_name": row[4] if row[4] else "",
                 "request_start_time": row[5].isoformat() if isinstance(row[5], datetime) else "1970-01-01T00:00:00",
