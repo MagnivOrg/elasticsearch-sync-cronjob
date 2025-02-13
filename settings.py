@@ -9,6 +9,7 @@ DB_CONFIG = {
     "password": os.getenv("DB_PASSWORD"),
     "host": os.getenv("DB_HOST"),
     "port": os.getenv("DB_PORT"),
+    "read_host": os.getenv("READ_POSTGRES_HOST")
 }
 
 ES_HOST = os.getenv("ES_HOST")
